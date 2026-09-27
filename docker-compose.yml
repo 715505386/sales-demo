@@ -1,0 +1,23 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: sales-assistant-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: sales_demo
+      MYSQL_USER: sales_demo
+      MYSQL_PASSWORD: sales_demo_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - sales_mysql_data:/var/lib/mysql
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/001_init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "sales_demo", "-psales_demo_password"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  sales_mysql_data:

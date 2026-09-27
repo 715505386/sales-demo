@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.idea/
+runtime_data/
+generated_files/
+.env
+logs/
